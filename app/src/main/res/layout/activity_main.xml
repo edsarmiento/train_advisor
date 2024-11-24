@@ -75,7 +75,7 @@
             android:background="@android:drawable/editbox_background"
             android:hint="Ingrese ID del equipo"
             android:inputType="text"
-            android:maxLength="12"
+            android:maxLength="11"
             android:padding="15dp"
             android:textAlignment="center"
             android:textSize="16sp" />
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -185,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -236,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -261,7 +261,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -286,7 +286,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="PPGX 3053"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>

@@ -4,6 +4,7 @@ import android.Manifest;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> warningData = hazardInfo.getHazardData("warning");
                 if (warningData != null) {
                     populateDetails(warningData);
+                    details_emergency_phone.setEnabled(true);
+                    details_emergency_phone.setBackgroundColor(Color.RED);
+                    Drawable drawableRight = ContextCompat.getDrawable(this, R.drawable.ic_phone);
+                    if (drawableRight != null) {
+                        drawableRight.setBounds(0, 0, drawableRight.getIntrinsicWidth(), drawableRight.getIntrinsicHeight());
+                        details_emergency_phone.setCompoundDrawables(null, null, drawableRight, null); // Apply drawable to the right
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "No data found for 'warning'", Toast.LENGTH_SHORT).show();
                 }
@@ -85,12 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         details_emergency_phone.setOnClickListener(view -> {
             String phoneNumber = "tel:" + details_emergency_phone.getText().toString(); // Ensure it's a valid URI
-            Drawable drawableRight = ContextCompat.getDrawable(this, R.drawable.ic_phone);
-            if (drawableRight != null) {
-                drawableRight.setBounds(0, 0, drawableRight.getIntrinsicWidth(), drawableRight.getIntrinsicHeight());
-                details_emergency_phone.setCompoundDrawables(null, null, drawableRight, null); // Apply drawable to the right
-            }
-
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.parse(phoneNumber));
 

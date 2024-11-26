@@ -291,10 +291,11 @@
                     android:text="Call Now"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
-                    android:backgroundTint="#FF0000"
+                    android:background="@android:color/transparent"
                     android:drawablePadding="8dp"
                     android:padding="12dp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:enabled="false" />
             </LinearLayout>
 
             <!-- Details TELEFONO EMERGENCIA -->

@@ -1,7 +1,13 @@
 package com.example.railadvisor;
 
+import android.Manifest;
+
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Define variables
     private static final String REGEX = "^[A-Z]{4} \\d{1,6}$";
-    private Button buttonToast;
+    private Button buttonToast, details_emergency_phone;
     private EditText container_input;
-    private TextView details_id, details_estado, details_unna, details_contenido, details_clase_peligro, details_ferrocarril, details_emergency_phone;
+    private TextView details_id, details_estado, details_unna, details_contenido, details_clase_peligro, details_ferrocarril;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
             // Validate the input using regex
             if (Pattern.matches(REGEX, value_input)) {
-                Toast.makeText(MainActivity.this, "Valid input!", Toast.LENGTH_SHORT).show();
-
                 // Create an instance of HazardInfo (mock data class)
                 HazardInfo hazardInfo = new HazardInfo();
 
@@ -75,6 +81,28 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, "Formato inválido! Use 'ABCD 123'", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        details_emergency_phone.setOnClickListener(view -> {
+            String phoneNumber = "tel:" + details_emergency_phone.getText().toString(); // Ensure it's a valid URI
+            Drawable drawableRight = ContextCompat.getDrawable(this, R.drawable.ic_phone);
+            if (drawableRight != null) {
+                drawableRight.setBounds(0, 0, drawableRight.getIntrinsicWidth(), drawableRight.getIntrinsicHeight());
+                details_emergency_phone.setCompoundDrawables(null, null, drawableRight, null); // Apply drawable to the right
+            }
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse(phoneNumber));
+
+            // Check for CALL_PHONE permission
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // Request permission if not granted
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return;
+            }
+
+            // Start the call
+            startActivity(callIntent);
         });
     }
 

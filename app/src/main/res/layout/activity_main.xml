@@ -281,22 +281,22 @@
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/details_emergency_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Call Now"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:background="@android:color/transparent"
-                    android:drawablePadding="8dp"
-                    android:padding="12dp"
-                    android:gravity="center"
-                    android:enabled="false" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/details_emergency_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Call Now"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:gravity="center"
+                android:enabled="false" />
 
             <!-- Details TELEFONO EMERGENCIA -->
             <LinearLayout

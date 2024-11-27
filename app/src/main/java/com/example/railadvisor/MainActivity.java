@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -61,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
         more_info = findViewById(R.id.more_info);
         details_icon = findViewById(R.id.icon);
+
+        // Set up the Toolbar
+        Toolbar toolbar = new Toolbar(this);
+        toolbar.setTitle("My App");
+        setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
 
         // Handle window insets for edge-to-edge UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -109,6 +118,30 @@ public class MainActivity extends AppCompatActivity {
             // Start the call
             startActivity(callIntent);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Add items programmatically to the menu
+        menu.add(0, 1, 0, "Item 1").setIcon(android.R.drawable.ic_menu_camera).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 2, 1, "Item 2").setIcon(android.R.drawable.ic_menu_info_details).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle menu item click events
+        switch (item.getItemId()) {
+            case 1:
+                Toast.makeText(this, "Item 1 clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case 2:
+                Toast.makeText(this, "Item 2 clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setMoreInfoColorText(){

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String REGEX = "^[A-Z]{4} \\d{1,6}$";
     private Button buttonSearch, details_emergency_phone;
     private EditText container_input;
-    private TextView details_id, details_estado, details_unna, details_contenido, details_clase_peligro, details_ferrocarril;
+    private TextView details_id, details_estado, details_unna, details_contenido, details_clase_peligro, details_ferrocarril, more_info;
     private ImageView details_icon;
 
     @Override
@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         details_clase_peligro = findViewById(R.id.details_clase_peligro);
         details_ferrocarril = findViewById(R.id.details_ferrocarril);
         details_emergency_phone = findViewById(R.id.details_emergency_phone);
+
+        more_info = findViewById(R.id.more_info);
         details_icon = findViewById(R.id.icon);
 
         // Handle window insets for edge-to-edge UI
@@ -82,18 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (mockData != null) {
                     populateDetails(mockData);
-
-                    details_emergency_phone.setEnabled(true);
-                    details_emergency_phone.setBackgroundColor(Color.RED);
-
-                    Drawable drawableLeft = ContextCompat.getDrawable(this, R.drawable.ic_phone);
-                    if (drawableLeft != null) {
-                        drawableLeft.setBounds(0, 0, drawableLeft.getIntrinsicWidth(), drawableLeft.getIntrinsicHeight());
-                        details_emergency_phone.setCompoundDrawables(drawableLeft, null, null, null);
-                        details_emergency_phone.setCompoundDrawablePadding(16); // Adjust as needed (16dp)
-                    }
-                    details_emergency_phone.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-
+                    setCallButton();
+                    setMoreInfoColorText();
                 } else {
                     Toast.makeText(MainActivity.this, "ID '"+value_input+"' no encontrado", Toast.LENGTH_LONG).show();
                 }
@@ -119,6 +111,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setMoreInfoColorText(){
+        more_info.setTextColor(Color.parseColor("#000000"));
+    }
+
+    public void setCallButton(){
+        details_emergency_phone.setEnabled(true);
+        details_emergency_phone.setBackgroundColor(Color.RED);
+
+        Drawable drawableLeft = ContextCompat.getDrawable(this, R.drawable.ic_phone);
+        if (drawableLeft != null) {
+            drawableLeft.setBounds(0, 0, drawableLeft.getIntrinsicWidth(), drawableLeft.getIntrinsicHeight());
+            details_emergency_phone.setCompoundDrawables(drawableLeft, null, null, null);
+            details_emergency_phone.setCompoundDrawablePadding(16); // Adjust as needed (16dp)
+        }
+        details_emergency_phone.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+    }
+
     // Helper method to populate TextViews with data
     private void populateDetails(Map<String, String> data) {
         details_id.setText(data.getOrDefault("id", "N/A"));
@@ -128,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
         details_clase_peligro.setText(data.getOrDefault("clase_peligro", "N/A"));
         details_ferrocarril.setText(data.getOrDefault("ferrocarril", "N/A"));
         details_emergency_phone.setText(data.getOrDefault("telefono", "N/A"));
-
 
         String iconName = data.getOrDefault("icon", "N/A");
         int resourceId = getResources().getIdentifier(iconName, "drawable", getPackageName());

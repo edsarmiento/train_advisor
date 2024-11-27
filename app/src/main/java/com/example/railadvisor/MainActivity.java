@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 HazardInfo hazardInfo = new HazardInfo();
 
                 // Get data for "warning" and populate UI
-                Map<String, String> warningData = hazardInfo.getHazardData("warning");
+                Map<String, String> warningData = hazardInfo.getHazardData(value_input);
+
                 if (warningData != null) {
                     populateDetails(warningData);
                     details_emergency_phone.setEnabled(true);

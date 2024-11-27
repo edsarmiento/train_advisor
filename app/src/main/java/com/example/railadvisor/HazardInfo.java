@@ -12,29 +12,33 @@ public class HazardInfo {
     public HazardInfo() {
         hazardData = new HashMap<>();
 
-        // Create "warning" data
-        Map<String, String> warning = new HashMap<>();
-        warning.put("id", "PPGX 3053");
-        warning.put("estado", "cargado");
-        warning.put("unna", "1017");
-        warning.put("contenido", "cloro");
-        warning.put("clase_peligro", "2");
-        warning.put("ferrocarril", "Ferrosur");
-        warning.put("telefono", "8009111393");
+        // Data for PPGX 3053
+        Map<String, String> ppgx3053 = new HashMap<>();
+        ppgx3053.put("id", "PPGX 3053");
+        ppgx3053.put("estado", "cargado");
+        ppgx3053.put("unna", "1080");
+        ppgx3053.put("contenido", "cloro");
+        ppgx3053.put("clase_peligro", "2");
+        ppgx3053.put("ferrocarril", "Ferrosur");
+        ppgx3053.put("telefono", "8009111393");
+        ppgx3053.put("icon", "flamable");
 
-        // Create "danger" data
-        Map<String, String> danger = new HashMap<>();
-        danger.put("id", "XXXX XXXX");
-        danger.put("estado", "cargado");
-        danger.put("unna", "1017");
-        danger.put("contenido", "cloro");
-        danger.put("clase_peligro", "2");
-        danger.put("ferrocarril", "Ferrosur");
-        danger.put("telefono", "8009111393");
+        // Add PPGX 3053 data to the main map
+        hazardData.put("PPGX 3053", ppgx3053);
 
-        // Add the data to the main map
-        hazardData.put("warning", warning);
-        hazardData.put("danger", danger);
+        // Data for PPGX 3054
+        Map<String, String> ppgx3054 = new HashMap<>();
+        ppgx3054.put("id", "PPGX 3054"); // Corrected to a unique id
+        ppgx3054.put("estado", "cargado");
+        ppgx3054.put("unna", "1017");
+        ppgx3054.put("contenido", "PUTITAS");
+        ppgx3054.put("clase_peligro", "2");
+        ppgx3054.put("ferrocarril", "Ferrosur");
+        ppgx3054.put("telefono", "8009111393");
+        ppgx3054.put("icon", "warning");
+
+        // Add PPGX 3054 data to the main map
+        hazardData.put("PPGX 3054", ppgx3054);
     }
 
     // Function to get data for a requested key

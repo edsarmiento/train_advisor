@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.view.Gravity;
+
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -29,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     // Define variables
     private static final String REGEX = "^[A-Z]{4} \\d{1,6}$";
-    private Button buttonToast, details_emergency_phone;
+    private Button buttonSearch, details_emergency_phone;
     private EditText container_input;
     private TextView details_id, details_estado, details_unna, details_contenido, details_clase_peligro, details_ferrocarril;
+    private ImageView details_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize Views
-        buttonToast = findViewById(R.id.search_button);
+        buttonSearch = findViewById(R.id.search_button);
         container_input = findViewById(R.id.container_input);
 
         details_id = findViewById(R.id.details_id);
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         details_clase_peligro = findViewById(R.id.details_clase_peligro);
         details_ferrocarril = findViewById(R.id.details_ferrocarril);
         details_emergency_phone = findViewById(R.id.details_emergency_phone);
+        details_icon = findViewById(R.id.icon);
 
         // Handle window insets for edge-to-edge UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set up the button's onClick listener
-        buttonToast.setOnClickListener(v -> {
+        buttonSearch.setOnClickListener(v -> {
             // Get the text input as a string
             String value_input = container_input.getText().toString();
 
@@ -73,19 +78,24 @@ public class MainActivity extends AppCompatActivity {
                 HazardInfo hazardInfo = new HazardInfo();
 
                 // Get data for "warning" and populate UI
-                Map<String, String> warningData = hazardInfo.getHazardData(value_input);
+                Map<String, String> mockData = hazardInfo.getHazardData(value_input);
 
-                if (warningData != null) {
-                    populateDetails(warningData);
+                if (mockData != null) {
+                    populateDetails(mockData);
+
                     details_emergency_phone.setEnabled(true);
                     details_emergency_phone.setBackgroundColor(Color.RED);
-                    Drawable drawableRight = ContextCompat.getDrawable(this, R.drawable.ic_phone);
-                    if (drawableRight != null) {
-                        drawableRight.setBounds(0, 0, drawableRight.getIntrinsicWidth(), drawableRight.getIntrinsicHeight());
-                        details_emergency_phone.setCompoundDrawables(null, null, drawableRight, null); // Apply drawable to the right
+
+                    Drawable drawableLeft = ContextCompat.getDrawable(this, R.drawable.ic_phone);
+                    if (drawableLeft != null) {
+                        drawableLeft.setBounds(0, 0, drawableLeft.getIntrinsicWidth(), drawableLeft.getIntrinsicHeight());
+                        details_emergency_phone.setCompoundDrawables(drawableLeft, null, null, null);
+                        details_emergency_phone.setCompoundDrawablePadding(16); // Adjust as needed (16dp)
                     }
+                    details_emergency_phone.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+
                 } else {
-                    Toast.makeText(MainActivity.this, "No data found for 'warning'", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "ID '"+value_input+"' no encontrado", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(MainActivity.this, "Formato inválido! Use 'ABCD 123'", Toast.LENGTH_SHORT).show();
@@ -118,5 +128,10 @@ public class MainActivity extends AppCompatActivity {
         details_clase_peligro.setText(data.getOrDefault("clase_peligro", "N/A"));
         details_ferrocarril.setText(data.getOrDefault("ferrocarril", "N/A"));
         details_emergency_phone.setText(data.getOrDefault("telefono", "N/A"));
+
+
+        String iconName = data.getOrDefault("icon", "N/A");
+        int resourceId = getResources().getIdentifier(iconName, "drawable", getPackageName());
+        details_icon.setImageResource(resourceId);
     }
 }

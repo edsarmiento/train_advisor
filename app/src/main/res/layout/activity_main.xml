@@ -307,10 +307,10 @@
                 android:gravity="center"> <!-- Centers content in the parent -->
 
                 <ImageView
+                    android:id="@+id/icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_margin="16dp"
-                    android:src="@drawable/flamable"
                     android:contentDescription="Flammable Gas Icon"
                     android:layout_gravity="center" /> <!-- Ensures this element is centered -->
 

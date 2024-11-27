@@ -35,7 +35,7 @@ public class HazardInfo {
         ppgx3054.put("clase_peligro", "2");
         ppgx3054.put("ferrocarril", "Ferrosur");
         ppgx3054.put("telefono", "8009111393");
-        ppgx3054.put("icon", "warning");
+        ppgx3054.put("icon", "rpbi");
 
         // Add PPGX 3054 data to the main map
         hazardData.put("PPGX 3054", ppgx3054);

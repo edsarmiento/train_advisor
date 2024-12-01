@@ -2,6 +2,7 @@ package com.example.railadvisor;
 
 import android.Manifest;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -22,12 +23,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.view.Gravity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText container_input;
     private TextView details_id, details_estado, details_unna, details_contenido, details_clase_peligro, details_ferrocarril, more_info;
     private ImageView details_icon;
+    private String file_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +125,40 @@ public class MainActivity extends AppCompatActivity {
             // Start the call
             startActivity(callIntent);
         });
+
+        more_info.setOnClickListener(v -> openPdfFromRaw());
+    }
+
+    private void openPdfFromRaw() {
+        try {
+            // Get InputStream from raw resource
+            InputStream inputStream = getResources().openRawResource(R.raw.amoniaco);
+
+            // Save it to a temporary file in internal storage
+            File tempFile = new File(getCacheDir(), "sample.pdf");
+            try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
+                }
+            }
+
+            // Use FileProvider to get URI for the file
+            Uri pdfUri = FileProvider.getUriForFile(this, "com.example.railadvisor.fileprovider", tempFile);
+
+            // Create an Intent to view the PDF
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(pdfUri, "application/pdf");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(intent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to open PDF", Toast.LENGTH_SHORT).show();
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No PDF viewer found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -170,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
         details_clase_peligro.setText(data.getOrDefault("clase_peligro", "N/A"));
         details_ferrocarril.setText(data.getOrDefault("ferrocarril", "N/A"));
         details_emergency_phone.setText(data.getOrDefault("telefono", "N/A"));
+
+        file_name = data.getOrDefault("file_name", "N/A");
 
         String iconName = data.getOrDefault("icon", "N/A");
         int resourceId = getResources().getIdentifier(iconName, "drawable", getPackageName());

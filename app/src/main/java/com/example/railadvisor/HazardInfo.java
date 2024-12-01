@@ -21,6 +21,7 @@ public class HazardInfo {
         aamx2014.put("ferrocarril", "Ferrosur");
         aamx2014.put("telefono", "(800)9111393");
         aamx2014.put("icon", "un1005");
+        aamx2014.put("file_name", "amoniaco.pdf");
         hazardData.put("AAMX 2014", aamx2014);
 
         Map<String, String> acfx73616 = new HashMap<>();
